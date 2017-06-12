@@ -20,10 +20,13 @@ setup(
     license='MIT',
     packages=['pygoose'],
     install_requires=[
+        'joblib',
+        'tqdm',
         'numpy',
         'pandas',
         'matplotlib',
         'keras',
+        'seaborn',
     ],
     include_package_data=True,
     zip_safe=False,
