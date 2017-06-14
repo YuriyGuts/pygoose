@@ -5,10 +5,13 @@ data/
     aux/
     preprocessed/
     features/
-        X_train_featurelist1.names
-        X_train_featurelist1.pickle
-        X_test_featurelist1.pickle
+        X_train_%featurelistname%.names
+        X_train_%featurelistname%.pickle
+        X_test_%featurelistname%.pickle
+        ...
     submissions/
+        %leaderboardscore%_%date%_%description%_%cvscore%.csv
+        ...
     trained/
     tmp/
     ...
@@ -32,9 +35,6 @@ import pandas as pd
 from .io import load, load_lines, save, save_lines
 
 
-data_folder = os.path.abspath(os.path.join(os.curdir, os.pardir, 'data')) + os.path.sep
-
-
 class Project:
     def __init__(self, root_dir):
         self._root_dir = root_dir
@@ -42,6 +42,7 @@ class Project:
 
     def _compute_dependent_paths(self):
         self._data_dir = os.path.join(self._root_dir, 'data')
+        self._notebooks_dir = os.path.join(self._root_dir, 'notebooks')
         self._aux_data_dir = os.path.join(self._data_dir, 'aux')
         self._preprocessed_data_dir = os.path.join(self._data_dir, 'preprocessed')
         self._features_dir = os.path.join(self._data_dir, 'features')
@@ -56,6 +57,10 @@ class Project:
     @property
     def data_dir(self):
         return self._data_dir + os.path.sep
+
+    @property
+    def notebooks_dir(self):
+        return self._notebooks_dir + os.path.sep
 
     @property
     def aux_dir(self):
@@ -120,6 +125,21 @@ class Project:
 
         return df_train, df_test, feature_ranges
 
+    def save_features(self, train_features, test_features, feature_names, feature_list_id):
+        """
+        Save features for the training and test sets to disk, along with their metadata.
+
+        Args:
+            train_features: A NumPy array of features for the training set.
+            test_features: A NumPy array of features for the test set.
+            feature_names: A list containing the names of the feature columns.
+            feature_list_id: The name for this feature list.
+        """
+
+        self.save_feature_names(feature_names, feature_list_id)
+        self.save_feature_list(train_features, 'train', feature_list_id)
+        self.save_feature_list(test_features, 'test', feature_list_id)
+
     def save_feature_names(self, feature_names, feature_list_id):
         """
         Save the names of the features for the given feature list to a metadata file.
@@ -127,7 +147,7 @@ class Project:
 
         Args:
             feature_names: A list containing the names of the features, matching the column order.
-            feature_list_id: The name of the feature list.
+            feature_list_id: The name for this feature list.
         """
 
         save_lines(feature_names, self.features_dir + 'X_train_{}.names'.format(feature_list_id))
@@ -141,13 +161,25 @@ class Project:
             obj: The object to pickle (e.g., a numpy array or a Pandas dataframe)
             project: An instance of pygoose project.
             set_id: The id of the subset (e.g., 'train' or 'test')
-            feature_list_id: The name of the feature list.
+            feature_list_id: The name for this feature list.
         """
 
         save(obj, self.features_dir + 'X_{}_{}.pickle'.format(set_id, feature_list_id))
 
     @staticmethod
     def discover():
+        """
+        Automatically discover the paths to various data folders in this project
+        and compose a Project instance.
+
+        Returns:
+            A constructed Project object.
+
+        Raises:
+            ValueError: if the paths could not be figured out automatically.
+                In this case, you have to create a Project manually using the initializer.
+        """
+
         # Try ../data: we're most likely running a Jupyter notebook from the 'notebooks' directory
         candidate_path = os.path.abspath(os.path.join(os.curdir, os.pardir, 'data'))
         if os.path.exists(candidate_path):
@@ -159,4 +191,4 @@ class Project:
             return os.path.abspath(os.curdir)
 
         # Out of ideas at this point.
-        raise ValueError('Cannot discover the structure of the project. Make sure that the data folder exists')
+        raise ValueError('Cannot discover the structure of the project. Make sure that the data directory exists')

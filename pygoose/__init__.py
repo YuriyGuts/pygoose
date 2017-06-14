@@ -38,7 +38,7 @@ _set_plotting_defaults()
 
 
 __all__ = [
-    # Convenience modules.
+    # Frequently used 3rd-party modules.
     'np',
     'pd',
     'plt',
