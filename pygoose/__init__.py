@@ -9,6 +9,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from tqdm import tqdm as progressbar
+
 from .kg import *
 
 
@@ -43,6 +45,9 @@ __all__ = [
     'pd',
     'plt',
     'sns',
+
+    # Convenience modules.
+    'progressbar',
 
     # Internal modules.
     'kg',

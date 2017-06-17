@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 setup(
     name='pygoose',
-    version='0.1',
+    version='0.1.0',
     description='Utility tool belt for Kaggle competitions and other Data Science experiments',
     classifiers=[
         'Programming Language :: Python :: 3',
@@ -18,7 +18,7 @@ setup(
     author='Yuriy Guts',
     author_email='yuriy.guts@gmail.com',
     license='MIT',
-    packages=['pygoose'],
+    packages=find_packages(),
     install_requires=[
         'joblib',
         'tqdm',
