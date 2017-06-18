@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pygoose',
-    version='0.1.1',
+    version='0.1.2',
     description='Utility tool belt for Kaggle competitions and other Data Science experiments',
     classifiers=[
         'Programming Language :: Python :: 3',
@@ -25,7 +25,6 @@ setup(
         'numpy',
         'pandas',
         'matplotlib',
-        'keras',
         'seaborn',
     ],
     include_package_data=True,

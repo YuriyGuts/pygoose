@@ -94,7 +94,7 @@ def plot_pair(df, feature_name_1, feature_name_2, kind='scatter', alpha=0.01, **
     plt.show()
 
 
-def eda_plot_feature_correlation_heatmap(df, features, font_size=9, figsize=(15, 15), save_filename=None):
+def plot_feature_correlation_heatmap(df, features, font_size=9, figsize=(15, 15), save_filename=None):
     """
     Plot a correlation heatmap between every feature pair.
 
@@ -138,7 +138,7 @@ def eda_plot_feature_correlation_heatmap(df, features, font_size=9, figsize=(15,
         fig.savefig(save_filename, dpi=300)
 
 
-def eda_scatterplot_matrix(df, features, downsample_frac=None, figsize=(15, 15)):
+def scatterplot_matrix(df, features, downsample_frac=None, figsize=(15, 15)):
     """
     Plot a scatterplot matrix for a list of features, colored by target value.
 

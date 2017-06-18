@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from tqdm import tqdm as progressbar
+from pkg_resources import get_distribution
 
 from .kg import *
 
@@ -52,3 +53,5 @@ __all__ = [
     # Internal modules.
     'kg',
 ]
+
+__version__ = get_distribution('pygoose').version
