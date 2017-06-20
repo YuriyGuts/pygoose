@@ -197,3 +197,25 @@ class Project:
 
         # Out of ideas at this point.
         raise ValueError('Cannot discover the structure of the project. Make sure that the data directory exists')
+
+    @staticmethod
+    def init():
+        """
+        Creates the project infrastructure assuming the current directory is the project root.
+        Typically used as a command-line entry point called by `pygoose init`.
+        """
+
+        project = Project(os.path.abspath(os.getcwd()))
+        paths_to_create = [
+            project.data_dir,
+            project.notebooks_dir,
+            project.aux_dir,
+            project.features_dir,
+            project.preprocessed_data_dir,
+            project.submissions_dir,
+            project.trained_model_dir,
+            project.temp_dir,
+        ]
+
+        for path in paths_to_create:
+            os.makedirs(path, exist_ok=True)

@@ -4,6 +4,8 @@ Therefore, while things like global imports and hard-coded option values may loo
 they are intentional in order to provide this particular simplified interface.
 """
 
+import sys
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -33,6 +35,12 @@ def _set_pandas_defaults():
 def _set_plotting_defaults():
     # Use higher resolution and larger fonts in plots.
     sns.set_context('talk')
+
+
+def _console_main():
+    # No need for argparse until we have more complex arguments.
+    if len(sys.argv) > 1 and sys.argv[1] == 'init':
+        kg.Project.init()
 
 
 _set_numpy_defaults()

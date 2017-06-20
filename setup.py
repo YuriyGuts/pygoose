@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pygoose',
-    version='0.1.2',
+    version='0.1.3',
     description='Utility tool belt for Kaggle competitions and other Data Science experiments',
     classifiers=[
         'Programming Language :: Python :: 3',
@@ -19,6 +19,9 @@ setup(
     author_email='yuriy.guts@gmail.com',
     license='MIT',
     packages=find_packages(),
+    entry_points={
+        'console_scripts': ['pygoose=pygoose:_console_main'],
+    },
     install_requires=[
         'joblib',
         'tqdm',
@@ -30,10 +33,10 @@ setup(
     include_package_data=True,
     zip_safe=False,
     setup_requires=[
-        'pytest-runner'
+        'pytest-runner',
     ],
 
     tests_require=[
-        'pytest'
+        'pytest',
     ],
 )
